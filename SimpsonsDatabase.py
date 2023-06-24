@@ -75,7 +75,7 @@ class SimpsonsDatabase:
         self.db.execute_query(query, parameters)
 
     def create_parents_relationship(self, parent_name, child_name):
-        query = "MATCH (parent:Member {name: $parent_name}), (child:Member {name: $child_name}) CREATE (parent)-[:pai]->(child)"
+        query = "MATCH (parent:Member {name: $parent_name}), (child:Member {name: $child_name}) CREATE (parent)-[:Pai]->(child)"
         parameters = {"parent_name": parent_name, "child_name": child_name}
         self.db.execute_query(query, parameters)
 
@@ -140,6 +140,27 @@ class SimpsonsDatabase:
         query = None
         if "Estudante" in question:
             query = "MATCH (member:Member {profissao: 'Estudante'}) RETURN member.name AS name"
+
+        elif "Artista"in question:
+            query = "MATCH (member:Member {profissao: 'Artista'}) RETURN member.name AS name"
+        elif "Aposentado"in question:
+            query = "MATCH (member:Member {profissao: 'Aposentado'}) RETURN member.name AS name"
+
+        elif "Dona de casa"in question:
+            query = "MATCH (member:Member {profissao: 'Dona de casa'}) RETURN member.name AS name"
+
+        elif "Inspetor de segurança"in question:
+            query = "MATCH (member:Member {profissao: 'Inspetor de segurança'}) RETURN member.name AS name"
+
+        elif "Sem profissao"in question:
+            query = "MATCH (member:Member {profissao: 'Sem profissao'}) RETURN member.name AS name"
+
+        elif "Ba;conista" in question:
+            query = "MATCH (member:Member {profissao: 'Balconista'}) RETURN member.name AS name"
+
+        elif "Ativista" in question:
+            query = "MATCH (member:Member {profissao: 'Ativista'}) RETURN member.name AS name"
+
         if query:
             result = self.db.execute_query(query)
             return [record["name"] for record in result]
