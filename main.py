@@ -1,7 +1,7 @@
 from Database import Database
 from SimpsonsDatabase import SimpsonsDatabase
 
-db = Database("bolt://3.239.247.32:7687", "neo4j", "reserves-margins-boresight")
+db = Database("bolt://3.237.90.25:7687", "neo4j", "runs-slashes-components")
 db.drop_all()
 
 members_database = SimpsonsDatabase(db)
@@ -48,7 +48,8 @@ def exibir_menu():
     print("2. Descobrir quais pessoas possuem determinada profissao")
     print("3. Fazer o update de um membro")
     print("4. Deletar um membro")
-    print("5. Sair")
+    print("5. Adiconar relacionamentos")
+    print("6. Sair")
 
 
 def executar_acao(acao):
@@ -67,6 +68,9 @@ def executar_acao(acao):
         print("Executando a Ação 4")
         members_database.delete_member()
     elif acao == 5:
+        print("Executando a Açao 5")
+        members_database.create_relationship_from_user_input()
+    elif acao == 6:
         return False
     else:
         print("Opção inválida. Por favor, escolha uma ação válida.")
@@ -81,13 +85,11 @@ def main():
     exibir_menu()
     executar = True
     while executar:
-        acao = int(input("Escolha uma ação (1-4): "))
+        acao = int(input("Escolha uma ação (1-6): "))
         executar = executar_acao(acao)
 
 
 if __name__ == "__main__":
     main()
-
-
 
 db.close()

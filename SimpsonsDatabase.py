@@ -79,6 +79,47 @@ class SimpsonsDatabase:
         parameters = {"parent_name": parent_name, "child_name": child_name}
         self.db.execute_query(query, parameters)
 
+    def create_relationship_from_user_input(self):
+        pergunta = input("Digite qual tipo de relacionamento você deseja criar: Parentesco, Esposo, Namorado, Dono ")
+
+
+        if pergunta == "Parentesco":
+            self.create_parents_relationship_input()
+        elif pergunta == "Esposo":
+            self.create_married_relationship_input()
+        elif pergunta == "Namorado":
+            self.create_boyfriend_relationship_input()
+        elif pergunta == "Dono":
+            self.create_pet_relationship_input()
+
+    def create_parents_relationship_input(self):
+        parent_name = input("Digite o nome da primeira pessoa do relacionamento")
+        child_name = input("Digite o nome da segunda pessoa do relacionamento")
+        query = "MATCH (parent:Member {name: $parent_name}), (child:Member {name: $child_name}) CREATE (parent)-[:Pai]->(child)"
+        parameters = {"parent_name": parent_name, "child_name": child_name}
+        self.db.execute_query(query, parameters)
+
+    def create_married_relationship_input(self):
+        esposo1_name = input("Digite o nome da primeira pessoa do relacionamento")
+        esposo2_name = input("Digite o nome da segunda pessoa do relacionamento")
+        query = "MATCH (esposo1:Member {name: $esposo1_name}), (esposo2:Member {name: $esposo2_name}) CREATE (esposo1)-[:Casado]->(esposo2)"
+        parameters = {"esposo1_name": esposo1_name, "esposo2_name": esposo2_name}
+        self.db.execute_query(query, parameters)
+
+    def create_boyfriend_relationship_input(self):
+        boyfriend_name = input("Digite o nome da primeira pessoa do relacionamento")
+        girlfriend_name = input("Digite o nome da segunda pessoa do relacionamento")
+        query = "MATCH (boyfriend:Member {name: $boyfriend_name}), (girlfriend:Member {name: $girlfriend_name}) CREATE (boyfriend)-[:namorado]->(girlfriend)"
+        parameters = {"boyfriend_name": boyfriend_name, "girlfriend_name": girlfriend_name}
+        self.db.execute_query(query, parameters)
+
+    def create_pet_relationship_input(self):
+        owner_name = input("Digite o nome da primeira pessoa do relacionamento")
+        pet_name = input("Digite o nome do pet do relacionamento")
+        query = "MATCH (owner:Member {name: $owner_name}), (pet:Member {name: $pet_name}) CREATE (owner)-[:dono]->(pet)"
+        parameters = {"owner_name": owner_name, "pet_name": pet_name}
+        self.db.execute_query(query, parameters)
+
     def create_married_relationship(self, esposo1_name, esposo2_name):
         query = "MATCH (esposo1:Member {name: $esposo1_name}), (esposo2:Member {name: $esposo2_name}) CREATE (esposo1)-[:casado]->(esposo2)"
         parameters = {"esposo1_name": esposo1_name, "esposo2_name": esposo2_name}
