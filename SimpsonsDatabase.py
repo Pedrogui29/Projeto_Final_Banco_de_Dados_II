@@ -3,7 +3,7 @@ class SimpsonsDatabase:
         self.db = database
 
 
-
+#Funcao de criar
     def create_member(self, name, profissao, idade):
         query = "CREATE (:Member {name: $name, profissao: $profissao, idade: $idade})"
         parameters = {"name": name, "profissao": profissao, "idade": idade}
